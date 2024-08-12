@@ -1,0 +1,213 @@
+" vim key binding map file
+" vim.keymap.set("n", "<Space>", "<Nop>", {silent = true, remap = false}
+let g:mapleader = " "
+" let g:maplocalleader = " "
+
+" 保存本地变量
+let opt = { "noremap": v:true, "silent": v:true }
+
+""========================= Basic Settings ============================
+set NERDTree
+set easymotion
+set which-key
+set notimeout
+" make the popup appear much slower
+let g:WhichKey_DefaultDelay = 1000
+set scrolloff=10
+set showmatch
+set autoindent
+set tabwidth=4
+set incsearch
+set ignorecase
+set hlsearch
+set showmode
+set number relativenumber
+"--设置返回normal模式时回到英文输入法
+set keep-english-in-normal
+
+imap jj <Esc>
+imap kk <Esc>
+" 窗口间跳转
+nnoremap <A-h> <C-w>h
+nnoremap <A-j> <C-w>j
+nnoremap <A-k> <C-w>k
+nnoremap <A-l> <C-w>l
+"--普通模式下使用回车键，向下/向上 增加一行
+nmap <CR> o<Esc>
+nmap <S-Enter> O<Esc>
+" 可视模式下缩进
+vnoremap < <gv
+vnoremap > >gv
+" 重新设置CTRL+u/d，使得每次只跳转10行
+nnoremap <C-d> 10j
+nnoremap <C-u> 10k
+nnoremap <leader>o o<Esc>
+nnoremap <leader>O O<Esc>
+
+" 常用的保存和退出
+nnoremap <leader>w :write<CR>
+nnoremap <leader>a :wqa<CR>
+nnoremap <leader>x :wq<CR>
+nnoremap <leader>; g_
+"inoremap ;w <esc>:write<CR>
+"inoremap ;x <esc>:wq<CR>
+inoremap ;; <esc>g_a
+
+"将Ctrl + s 映射为保存文档(也可以在VIM设置里将此快捷键设置为IDEA的快捷键)
+nmap <C-s> <action>(SaveAll)
+imap <C-s> <Esc><action>(SaveAll)
+
+"" =====================COPY && PASTE=========================
+"普通模式下将 "+ (复制到剪切板）简化为 <leader>y
+let g:WhichKeyDesc_CopyClipboard = "<leader>y 复制到剪切板"
+vmap <leader>y "+y
+"可视模式下将 "+ (复制到剪切板）简化为 <leader>y
+let g:WhichKeyDesc_CopyClipboard= "<leader>y 复制到剪切板"
+nmap <leader>y "+yy
+
+"" =====================Tabs =====================
+"切换标签页
+nmap <leader>j <action>(NextTab)
+nmap <leader>k <action>(PreviousTab)
+
+let g:WhichKeyDesc_CodeAndClose = "<leader>c Code&关闭"
+
+let g:WhichKeyDesc_CodeAndClose_CloseEditor = "<leader>cc 关闭当前标签页"
+nmap <leader>cc <action>(CloseEditor)
+"关闭所有标签页
+let g:WhichKeyDesc_CodeAndClose_CloseAllEditors = "<leader>ca 关闭所有标签页"
+nmap <leader>ca <action>(CloseAllEditors)
+
+let g:WhichKeyDesc_CodeAndClose_CloseAllEditorsButActive = "<leader>co 关闭所有非活跃标签页"
+nmap <leader>co <action>(CloseAllEditorsButActive)
+
+"============================= windows operations ============================
+"let g:WhichKeyDesc_Windows = "<leader>w 窗口"
+"let g:WhichKeyDesc_Windows_Hide = "<leader>ww 关闭提示窗口->a"
+"let g:WhichKeyDesc_Windows_Move = "<leader>wm 移动窗口"
+""向右拆分标签页
+"let g:WhichKeyDesc_Windows_Move_MoveTabRight = "<leader>wml 向右拆分标签页"
+"nmap <leader>wml <action>(MoveTabRight)
+""向下拆分标签页
+"let g:WhichKeyDesc_Windows_Move_MoveTabDown = "<leader>wmd 向下拆分标签页"
+"nmap <leader>wmd <action>(MoveTabDown)
+""在另一边打开（前提是有另一边的分割窗口）
+"let g:WhichKeyDesc_Windows_Move_MoveEditorToOppositeTabGroup = "<leader>wmo 在另一边打开"
+"nmap <leader>wmo <action>(MoveEditorToOppositeTabGroup)
+""向右复制标签页
+""let g:WhichKeyDesc_Windows_Move_SplitVertically = "<leader>wmc 向右复制标签页"
+""nmap <leader>wmc <action>(SplitVertically)
+"
+""取消所有分割窗口
+"let g:WhichKeyDesc_Windows_UnsplitAll = "<leader>wa 取消所有分割窗口"
+"nmap <leader>wa <action>(UnsplitAll)
+""关闭当前窗口或分割窗格
+"let g:WhichKeyDesc_Windows_closeActiveWindow = "<leader>wc 关闭当前分割窗口"
+"nmap <leader>wc <c-w>c
+""取消拆分当前分割窗口
+"let g:WhichKeyDesc_Windows_Unsplit = "<leader>wu 取消拆分当前分割窗口"
+"nmap <leader>wu <action>(Unsplit)
+"
+""关闭提示窗口
+"let g:WhichKeyDesc_Windows_Hide_HideActiveWindow = "<leader>wwa 关闭提示窗口"
+"nmap <leader>wwa <action>(HideActiveWindow)
+
+"" ============================= CODE & DEBUG ==========================
+"--格式化（规范化）文本，即对选定的文本进行换行或重排，适应指定的文本宽度。
+"全文规范化：Ctrl+Alt+l
+map Q gg=G
+"跳转到下一个错误或警告
+nmap ge <action>(GotoNextError)
+let g:WhichKeyDesc_GotoNextError = "ge 跳转到下一个错误或警告"
+
+"在源代码和测试代码之间快速切换
+nmap gt <action>(GotoTest)
+let g:WhichKeyDesc_GotoTest = "gt 在源代码和测试代码之间快速切换"
+
+"将光标移动到上一个方法的声明处
+" last changed in current buffer(file)
+nmap gm <action>(MethodUp)
+let g:WhichKeyDesc_MethodUp = "gm 将光标移动到上一个方法的声明处"
+
+"跳转到当前接口或抽象类的实现处
+nmap ga <action>(GotoImplementation)
+let g:WhichKeyDesc_GotoImplementation = "ga 跳转到当前接口或抽象类的实现处"
+
+" bookmark 切换书签
+nmap <C-m> <action>(ToggleBookmark)
+let g:WhichKeyDesc_bookmark = "ma 书签"
+
+let g:WhichKeyDesc_FindOrFormat = "<leader>f 查找&格式化"
+"快速 导航/查找 项目中的其他文件(Ctrl + n)
+let g:WhichKeyDesc_FindOrFormat_FindFile = "<leader>ff 查找文件"
+nmap <leader>ff <action>(GotoFile)
+
+"在整个项目中查找指定的文本、关键字或正则表达式，包括代码文件、配置文件和其他文件等(Ctrl + Shift + F)
+let g:WhichKeyDesc_FindOrFormat_FindText = "<leader>ft 查找字符"
+nmap <leader>ft <action>(FindInPath)
+
+let g:WhichKeyDesc_FindOrFormat_FindFileLocation = "<leader>fl 定位文件位置"
+nmap <leader>fl <action>(SelectInProjectView)
+
+"打开 "Find Action"（查找动作）对话框(Ctrl + Shift + A)
+let g:WhichKeyDesc_FindOrFormat_Commands = "<leader>fc 打开查找菜单"
+nmap <leader>fc <action>(GotoAction)
+"重新格式化代码，使其符合预定义的代码样式和规范 \| 优化导入语句，删除未使用的导入，并将导入语句按字母顺序进行排列
+let g:WhichKeyDesc_FindOrFormat_Format = "<leader>fm 格式化代码"
+nmap <leader>fm <action>(ReformatCode) \| <action>(OptimizeImports)
+
+let g:WhichKeyDesc_NERDTreeOrNew_Highlight = "<leader>nh 取消搜索高亮"
+nmap <leader>nh :nohlsearch<CR>
+
+"显示当前打开文件的文件结构弹出窗口，其中包含文件中的类、方法、字段等结构(Alt + 7)
+let g:WhichKeyDesc_Show_FileStructure = "<leader>ss 显示文件结构"
+nmap <leader>ss <action>(FileStructurePopup)
+
+"显示书签（Bookmarks）工具窗口，其中包含当前文件中设置的书签列表(Ctrl + F11)
+let g:WhichKeyDesc_Show_Bookmarks = "<leader>sb 显示书签工具窗口"
+nmap <leader>sb <action>(ShowBookmarks)
+
+"用于显示方法或函数的参数信息(Ctrl + p)
+let g:WhichKeyDesc_Show_ParameterInfo = "<leader>sp 显示方法或函数的参数信息"
+nmap <leader>sp <action>(ParameterInfo)
+
+"运行当前编辑器中的文件或类(Shift + F10)
+let g:WhichKeyDesc_RunOrRe_RunCalss = "<leader>rc 运行当前文件"
+nmap <leader>rc :action RunClass<CR>
+"重新运行最近一次运行的程序或测试(Ctrl+Shift + F10)
+let g:WhichKeyDesc_RunOrRe_ReRun = "<leader>rr 重新运行"
+nmap <leader>rr <action>(Rerun)
+"重新运行最近一次运行的测试（Unit Tests）(Ctrl + Shift + F10)
+let g:WhichKeyDesc_RunOrRe_ReRunTests = "<leader>rt 重新运行Test"
+nmap <leader>rt <action>(RerunTests)
+"在代码中快速更改一个标识符的名称，并自动处理所有相关的引用(Shift + F6)
+let g:WhichKeyDesc_RunOrRe_Rename = "<leader>rn 重构"
+map <leader>rn <action>(RenameElement)
+"运行
+let g:WhichKeyDesc_RunOrRe_Run = "<leader>ru 运行"
+map <leader>ru <action>(Run)
+let g:WhichKeyDesc_Show_Stop = "<leader>st 停止运行"
+nmap <leader>st <action>(Stop)
+
+"" ================== NERDTree =============================
+let g:WhichKeyDesc_ToggleExplorerOrExtract = "<leader>e 打开文件列表"
+nmap <leader>e <action>(ActivateProjectToolWindow)
+
+"" Ctrl + n 打开或关闭nerdtree显示状态
+"nnoremap <C-n> :NERDTreeToggle<CR>
+
+"在当前目录新建文件夹
+let g:WhichKeyDesc_NERDTreeOrNew_NewDir = "<leader>nd 新建文件夹"
+nmap <leader>nd <action>(NewDir)
+"在当前目录新建类
+let g:WhichKeyDesc_NERDTreeOrNew_NewClass = "<leader>nc 新建.Class"
+nmap <leader>nc <action>(NewClass)
+"" ================== CodeGlance ===========================
+let g:WhichKeyDesc_CodeGlance= "<leader>m 开关小地图"
+nmap <leader>m <action>(CodeGlance.toggle)
+
+"" ================== easymotion =============================
+let g:WhichKeyDesc_easymotionkey = "<leader><leader> 快速跳转插件"
+"普通模式输入s后输入要跳转到单词首字母(或多输入几个字母)
+nmap ss <Plug>(easymotion-bd-n)
+let g:WhichKeyDesc_easymotion = "s 快速跳转"
